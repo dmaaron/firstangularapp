@@ -1,6 +1,6 @@
 var app = angular.module('myApp', []);
 
-var apiKey = ,
+var apiKey = 'MDE1NDg2MzY1MDE0MDY3NDY2MDYzZGRjOQ001',
     nprUrl = 'http://api.npr.org/query?id=61&fields=relatedLink,title,byline,text,audio,image,pullQuote,all&output=JSON';
 
 app.factory('audio', ['$document', function($document) {
