@@ -1,12 +1,13 @@
 <html ng-app="myApp">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="js/main.js"></script>
 </head>
 <body>
-    <div ng-controller="PlayerController">
-        {{ programs }}
-    </div>
-</body>
-
-</html>
+<div ng-controller="PlayerController">
+<ul id="programs_list" class="">
+<li ng-repeat="program in programs" ng-click="play(program)">
+<button class="large-12">{{ program.title.$text }}</button>
+</li>
+</ul>
+</div> 

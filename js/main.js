@@ -3,24 +3,35 @@ var app = angular.module('myApp', []);
 var apiKey = 'MDE1NDg2MzY1MDE0MDY3NDY2MDYzZGRjOQ001',
     nprUrl = 'http://api.npr.org/query?id=61&fields=relatedLink,title,byline,text,audio,image,pullQuote,all&output=JSON';
 
+app.directive('nprLink', function(){
+    return {
+        restrict: 'EA',
+        require: ['^ngModel'],
+        replace: true,
+        scope: {
+            ngModel: '=',
+            play: '&'
+        },
+        templateUrl: 'views/nprListItem.html',
+        link: function(scope, ele, attr) {
+            scope.duration = scope.ngModel.audio[0].duration.$text;
+        }
+    };
+});
+
+
 app.controller('PlayerController', ['$scope', '$http', function($scope, $http){
-    $scope.playing = false;
-    $scope.audio = document.createElement('audio');
-    $scope.audio.src = 'media/surfsong.mp4';
-    $scope.play = function() {
-        $scope.audio.play();
+    var audio = document.createElement('audio');
+    $scope.audio = audio;
+
+    $scope.play = function(program) {
+        if ($scope.playing) audio.pause();
+        var url = program.audio[0].format.mp4.$text;
+        audio.src = url;
+        audio.play();
         $scope.playing = true;
     };
 
-    $scope.stop = function() {
-        $scope.audio.pause();
-        $scope.playing = false;
-    };
-    $scope.audio.addEventListener('ended', function(){
-        $scope.$apply(function(){
-            $scope.stop();
-        });
-    });
       $http({
     method: 'JSONP',
     url: nprUrl + '&apiKey=' + apiKey + '&callback=JSON_CALLBACK'
